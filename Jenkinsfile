@@ -1,5 +1,5 @@
 node('master')   {
-      def dockerImageName= 'intdoc89/javadedockerapp_$JOB_NAME:$BUILD_NUMBER'
+      def dockerImageName= 'arbazpashadoc/javadedockerapp_$JOB_NAME:$BUILD_NUMBER'
       stage('SCM Checkout'){
          git 'https://github.com/zafar90/java-groovy-docker.git'          
       }
@@ -22,7 +22,7 @@ node('master')   {
    
       stage('Publish Docker Image'){
          withCredentials([string(credentialsId: 'dockerpwd', variable: 'dockerPWD')]) {
-              sh "docker login -u intdoc89 -p ${dockerPWD}"
+              sh "docker login -u arbazpashadoc -p ${dockerPWD}"
          }
         sh "docker push ${dockerImageName}"
       }
@@ -41,8 +41,8 @@ node('master')   {
                   //sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no ec2-user@13.127.81.47 ${scriptRunner}"
                     //sh "${scriptRunner}"
                   //sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no ec2-user@13.127.81.47 ${dockerRun}"
-                    sh "${dockerRun}"
-                  //sh "sudo kubectl apply -f app.yaml"
+                    //sh "${dockerRun}"
+                  sh "sudo kubectl apply -f app.yaml"
                     
             }
             
